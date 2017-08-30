@@ -19,11 +19,12 @@
 			$request = $bdd->query('SELECT * FROM annonce');
 			    
 			while ($donnees = $request->fetch(PDO::FETCH_ASSOC)) {
-				
+
 			 	$annonces = new Annonce;
 			 	$annonces->hydrate($donnees);
+			 	//var_dump($annonces);
 			        
-			 	echo $annonces->getTitle();
+			 	echo $annonces->getTitle(), '<br />', $annonces->getStreet(), ' ', $annonces->getTown(), ' ', $annonces->getZip_Code(), '<br />', $annonces->getDescription(), '<br /> <br/ >';
 			}
 
 

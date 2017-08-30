@@ -23,7 +23,7 @@ Class Annonce {
 	private $surface;
 	private $street;
 	private $town;
-	private $zipCode;
+	private $zip_code;
 	private $price;
 	private $description;
 
@@ -51,8 +51,8 @@ Class Annonce {
 		return $this->town;
 	}
 
-	public function getZipCode() {
-		return $this->zipCode;
+	public function getZip_code() {
+		return $this->zip_code;
 	}
 
 	public function getPrice() {
@@ -68,7 +68,7 @@ Class Annonce {
     	$id = (int) $id;
     
 	    if ($id > 0) {
-	      $this->_id = $id;
+	      $this->id = $id;
 	    }
   	}
 
@@ -105,12 +105,12 @@ Class Annonce {
     	}
   	}
 
-  	public function setZipCode($zipCode) {
+  	public function setZip_code($zip_code) {
     
-    	$zipCode = (int) $zipCode;
+    	$zip_code = (int) $zip_code;
     
-	    if ($zipCode > 0) {
-	      $this->zipCode = $zipCode;
+	    if ($zip_code > 0) {
+	      $this->zip_code = $zip_code;
 	    }
   	}
 
