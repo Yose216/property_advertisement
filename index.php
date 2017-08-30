@@ -1,5 +1,6 @@
 <?php 
 	include 'bdd.php'; //Connect to BDD
+	include 'Class/Annonce.php';
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -12,7 +13,21 @@
 	</head>
 	<body>
 
-		<h1>Test POO</h1>
+		<h1>Les annonces en ligne</h1>
+
+		<?php
+			$request = $bdd->query('SELECT * FROM annonce');
+			    
+			while ($donnees = $request->fetch(PDO::FETCH_ASSOC)) {
+				
+			 	$annonces = new Annonce;
+			 	$annonces->hydrate($donnees);
+			        
+			 	echo $annonces->getTitle();
+			}
+
+
+		?>
 
 	</body>
 </html>
