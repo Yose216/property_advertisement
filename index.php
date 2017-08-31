@@ -16,7 +16,7 @@
 		<h1>Les annonces en ligne</h1>
 
 		<?php
-			$request = $bdd->query('SELECT * FROM annonce');
+			$request = $bdd->query('SELECT * FROM annonce order by id desc');
 			    
 			while ($donnees = $request->fetch(PDO::FETCH_ASSOC)) {
 
