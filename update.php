@@ -14,12 +14,12 @@
 	</head>
 	<body>
 
-		<h1>Create Annonce</h1>
+		<h1>Update Annonce</h1>
 
 		<?php 
 			$d = [
-				'id' => 3,
-				'title' => 'Test add',
+				'id' => $_GET['id'],
+				'title' => 'Test ',
 				'type' => 'Appartement',
 				'surface' => 110,
 				'street' => '10 rue du test',
@@ -34,15 +34,15 @@
 
 			$request = $bdd->prepare('SELECT id FROM annonce WHERE id = :id');
 			$request->execute(array('id' => $d['id']));
-			// var_dump(new AnnonceManager($bdd));
 			
-			if($request->fetchColumn() ==  false) {
-				// $create = new AnnonceManager($bdd);
-				// $create->add($annonce);
+			
+			if($request->fetchColumn() ==  $_GET['id']) {
+				$update = new AnnonceManager($bdd);
+				$update->update_ann($annonce);
 				
 			}
 			else {
-				echo 'Error: Duplicate entry ' . $d['id'] .' for key ID';
+				echo 'Error: nothing entry ' . $d['id'] .' for key ID';
 			}
 
 		?>

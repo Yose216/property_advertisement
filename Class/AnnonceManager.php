@@ -26,6 +26,23 @@ class AnnonceManager {
     public function setbdd(PDO $bdd) {
         $this->bdd = $bdd;
     }
+
+    public function update_ann(Annonce $annonce) {
+        $q = $this->bdd->prepare('UPDATE annonce SET title = :title, type = :type, surface = :surface, street = :street, town = :town, zip_code = :zip_code, price = :price, description = :description WHERE id = :id');
+
+        $q->bindValue(':id', $annonce->getId());
+        $q->bindValue(':title', $annonce->getTitle());
+        $q->bindValue(':type', $annonce->getType());
+        $q->bindValue(':surface', $annonce->getSurface());
+        $q->bindValue(':street', $annonce->getStreet());
+        $q->bindValue(':town', $annonce->getTown());
+        $q->bindValue(':zip_code', $annonce->getZip_code());
+        $q->bindValue(':price', $annonce->getPrice());
+        $q->bindValue(':description', $annonce->getDescription());
+
+        $q->execute();
+
+    }
 }
 
 ?>
