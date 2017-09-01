@@ -17,7 +17,7 @@
 		<h1>Update Annonce</h1>
 
 		<?php 
-			$d = [
+			$donnees = [
 				'id' => $_GET['id'],
 				'title' => 'Test ',
 				'type' => 'Appartement',
@@ -29,20 +29,21 @@
 				'description' => 'lorem ipsum it dolor aem'
 			];
 
-			$annonce = new Annonce;
-			$annonce->hydrate($d);
+			$annonce = new Annonce($donnees);
 
 			$request = $bdd->prepare('SELECT id FROM annonce WHERE id = :id');
-			$request->execute(array('id' => $d['id']));
+			$request->execute(array('id' => $donnees['id']));
 			
 			
 			if($request->fetchColumn() ==  $_GET['id']) {
 				$update = new AnnonceManager($bdd);
 				$update->update_ann($annonce);
+
+				echo "succes";
 				
 			}
 			else {
-				echo 'Error: nothing entry ' . $d['id'] .' for key ID';
+				echo 'Error: nothing entry ' . $donnees['id'] .' for key ID';
 			}
 
 		?>

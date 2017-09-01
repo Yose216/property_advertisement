@@ -17,7 +17,7 @@
 		<h1>Create Annonce</h1>
 
 		<?php 
-			$d = [
+			$donnees = [
 				'id' => 3,
 				'title' => 'Test add',
 				'type' => 'Appartement',
@@ -29,20 +29,20 @@
 				'description' => 'lorem ipsum it dolor aem'
 			];
 
-			$annonce = new Annonce;
-			$annonce->hydrate($d);
+			$annonce = new Annonce($donnees);
 
 			$request = $bdd->prepare('SELECT id FROM annonce WHERE id = :id');
-			$request->execute(array('id' => $d['id']));
+			$request->execute(array('id' => $donnees['id']));
 			// var_dump(new AnnonceManager($bdd));
 			
 			if($request->fetchColumn() ==  false) {
-				// $create = new AnnonceManager($bdd);
-				// $create->add($annonce);
-				
+				$create = new AnnonceManager($bdd);
+				$create->add($annonce);
+
+				echo "Succes";
 			}
 			else {
-				echo 'Error: Duplicate entry ' . $d['id'] .' for key ID';
+				echo 'Error: Duplicate entry ' . $donnees['id'] .' for key ID';
 			}
 
 		?>

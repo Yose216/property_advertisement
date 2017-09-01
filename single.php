@@ -5,9 +5,9 @@
 	$request = $bdd->prepare('SELECT * FROM annonce WHERE id = :id');
 	$request->execute(array('id' => $_GET['id']));
 
-	$annonce = new Annonce;
 	$donnees = $request->fetch(PDO::FETCH_ASSOC);
-	$annonce->hydrate($donnees);
+	$annonce = new Annonce($donnees);
+	
 ?>
 <!DOCTYPE HTML>
 <html>

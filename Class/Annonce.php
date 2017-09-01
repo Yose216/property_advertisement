@@ -2,7 +2,7 @@
 
 Class Annonce {
 
-	public function hydrate(array $donnees) {
+	public function __construct(array $donnees) {
   
   		foreach ($donnees as $key => $value) {
     		// On récupère le nom du setter correspondant à l'attribut.

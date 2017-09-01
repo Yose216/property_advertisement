@@ -1,6 +1,7 @@
 <?php 
 	include 'bdd.php'; //Connect to BDD
 	include 'Class/Annonce.php';
+	include 'Class/AnnonceManager.php';
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -16,17 +17,15 @@
 		<h1>Les annonces en ligne</h1>
 
 		<?php
-			$request = $bdd->query('SELECT * FROM annonce order by id desc');
-			    
-			while ($donnees = $request->fetch(PDO::FETCH_ASSOC)) {
 
-			 	$annonces = new Annonce;
-			 	$annonces->hydrate($donnees);
-			 	//var_dump($annonces);
-			        
-			 	echo $annonces->getTitle(), '<br />', $annonces->getStreet(), ' ', $annonces->getTown(), ' ', $annonces->getZip_Code(), '<br />', $annonces->getDescription(), '<br /> <br/ >';
+			$annonce = new AnnonceManager($bdd);
+			
+			$value = array();
+			$value = $annonce->all_ann();
+
+			foreach ($value as $annonce) {
+				echo $annonce->getTitle(), '<br />', $annonce->getStreet(), ' ', $annonce->getTown(), ' ', $annonce->getZip_Code(), '<br />', $annonce->getDescription(), '<br /> <br/ >';
 			}
-
 
 		?>
 

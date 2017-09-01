@@ -7,6 +7,20 @@ class AnnonceManager {
       $this->setbdd($bdd);
     }
 
+    public function all_ann() {
+        $q = $this->bdd->query('SELECT * FROM annonce order by id desc');
+
+        $annonces = [];
+
+        while ($donnees = $q->fetch(PDO::FETCH_ASSOC)) {
+
+            $annonces[] = new Annonce($donnees);
+        }
+        
+        return $annonces;
+
+    }
+
     public function add(Annonce $annonce) {
         $q = $this->bdd->prepare('INSERT INTO annonce (id, title, type, surface, street, town, zip_code, price, description) VALUES(:id, :title, :type, :surface, :street, :town, :zip_code, :price, :description)');
 
@@ -42,6 +56,14 @@ class AnnonceManager {
 
         $q->execute();
 
+    }
+
+    public function delete_ann (Annonce $annonce) {
+        $q = $this->bdd->prepare('DELETE FROM annonce WHERE id = :id');
+
+        $q->bindValue(':id', $annonce->getId());
+
+        $q->execute();
     }
 }
 
