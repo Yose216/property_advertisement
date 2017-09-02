@@ -4,7 +4,19 @@ class AnnonceManager {
     private $bdd; // Instance de PDO
 
     public function __construct($bdd) {
-      $this->setbdd($bdd);
+        $this->setbdd($bdd);
+    }
+
+    public function setbdd(PDO $bdd) {
+        $this->bdd = $bdd;
+    }
+
+    public function one_ann($id) {
+        $q = $this->bdd->query('SELECT * FROM annonce WHERE id = ' . $id);
+
+        $donnees = $q->fetch(PDO::FETCH_ASSOC); 
+
+        return new Annonce($donnees);
     }
 
     public function all_ann() {
@@ -21,7 +33,7 @@ class AnnonceManager {
 
     }
 
-    public function add(Annonce $annonce) {
+    public function add_ann(Annonce $annonce) {
         $q = $this->bdd->prepare('INSERT INTO annonce (id, title, type, surface, street, town, zip_code, price, description) VALUES(:id, :title, :type, :surface, :street, :town, :zip_code, :price, :description)');
 
         $q->bindValue(':id', $annonce->getId());
@@ -35,10 +47,6 @@ class AnnonceManager {
         $q->bindValue(':description', $annonce->getDescription());
 
         $q->execute();
-    }
-
-    public function setbdd(PDO $bdd) {
-        $this->bdd = $bdd;
     }
 
     public function update_ann(Annonce $annonce) {

@@ -16,33 +16,47 @@
 
 		<h1>Create Annonce</h1>
 
+		<form action="" method="post">
+ 			<p>Titre : <input type="text" name="title" /></p>
+ 			<p>Type : <input type="text" name="type" required/></p>
+ 			<p>Surface : <input type="number" name="surface" required/></p>
+ 			<p>Street : <input type="text" name="street" required/></p>
+ 			<p>Town : <input type="text" name="town" required/></p>
+ 			<p>Zip code : <input type="number" name="zip_code" required/></p>
+ 			<p>Price : <input type="number" name="price" required/></p>
+ 			<p>Description : <textarea name="description" required></textarea></p>
+ 			<p><input type="submit" value="Submit"></p>
+		</form>
+
 		<?php 
 			$donnees = [
-				'id' => 3,
-				'title' => 'Test add',
-				'type' => 'Appartement',
-				'surface' => 110,
-				'street' => '10 rue du test',
-				'town' => 'Rennes',
-				'zip_code' => 35700,
-				'price' => 140000,
-				'description' => 'lorem ipsum it dolor aem'
+				'title' => $_POST['title'],
+				'type' => $_POST['type'],
+				'surface' => $_POST['surface'],
+				'street' => $_POST['street'],
+				'town' => $_POST['town'],
+				'zip_code' => $_POST['zip_code'],
+				'price' => $_POST['price'],
+				'description' => $_POST['description']
 			];
 
-			$annonce = new Annonce($donnees);
-
-			$request = $bdd->prepare('SELECT id FROM annonce WHERE id = :id');
-			$request->execute(array('id' => $donnees['id']));
-			// var_dump(new AnnonceManager($bdd));
-			
-			if($request->fetchColumn() ==  false) {
-				$create = new AnnonceManager($bdd);
-				$create->add($annonce);
-
-				echo "Succes";
+			function trim_donnees(&$donnees) {
+    			$donnees = trim($donnees);
 			}
-			else {
-				echo 'Error: Duplicate entry ' . $donnees['id'] .' for key ID';
+			
+			if($_SERVER['REQUEST_METHOD'] === "POST") {
+				array_walk($donnees, 'trim_donnees');
+
+				if(!empty($donnees['title']) && !empty($donnees['type']) && !empty($donnees['surface']) &&  !empty($donnees['street']) && !empty($donnees['town']) && !empty($donnees['zip_code']) && !empty($donnees['price']) && !empty($donnees['description']) ) {
+					$annonce = new Annonce($donnees);
+					$create = new AnnonceManager($bdd);
+					$create->add_ann($annonce);
+
+					echo "Succes";
+				}
+				else {
+					echo 'Please complete all input';
+				}
 			}
 
 		?>

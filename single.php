@@ -1,12 +1,13 @@
 <?php 
 	include 'bdd.php'; //Connect to BDD
 	include 'Class/Annonce.php';
+	include 'Class/AnnonceManager.php';
 
-	$request = $bdd->prepare('SELECT * FROM annonce WHERE id = :id');
-	$request->execute(array('id' => $_GET['id']));
+	$get_annonce = New AnnonceManager($bdd);
 
-	$donnees = $request->fetch(PDO::FETCH_ASSOC);
-	$annonce = new Annonce($donnees);
+	$id = $_GET['id'];
+	
+	$annonce = $get_annonce->one_ann($id);
 	
 ?>
 <!DOCTYPE HTML>
